@@ -1,6 +1,10 @@
-# dwasm
+<p align="center">
+  <img src="docs/img/dwasm-logo.svg" width="128" alt="dwasm">
+</p>
 
-**Production-grade build tool for Leptos WASM frontends.**
+<h1 align="center">dwasm</h1>
+
+<p align="center"><strong>Production-grade build tool for Leptos WASM frontends.</strong></p>
 
 `dwasm` replaces `trunk build --release` with a robust 5-stage pipeline that handles the wasm-opt bulk-memory compatibility issue, automates content hashing, and patches `index.html` — all in a single command.
 

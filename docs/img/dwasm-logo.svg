@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#0d1117"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="url(#bg)" stroke="url(#accent)" stroke-width="3"/>
+  <!-- WASM hexagon (stylized) -->
+  <polygon points="64,22 94,40 94,76 64,94 34,76 34,40" fill="none" stroke="#6366f1" stroke-width="3" opacity="0.4"/>
+  <!-- Gear/build icon -->
+  <circle cx="64" cy="58" r="14" fill="none" stroke="#8b5cf6" stroke-width="3"/>
+  <circle cx="64" cy="58" r="6" fill="#6366f1"/>
+  <!-- Gear teeth -->
+  <line x1="64" y1="40" x2="64" y2="46" stroke="#8b5cf6" stroke-width="3" stroke-linecap="round"/>
+  <line x1="64" y1="70" x2="64" y2="76" stroke="#8b5cf6" stroke-width="3" stroke-linecap="round"/>
+  <line x1="46" y1="58" x2="52" y2="58" stroke="#8b5cf6" stroke-width="3" stroke-linecap="round"/>
+  <line x1="76" y1="58" x2="82" y2="58" stroke="#8b5cf6" stroke-width="3" stroke-linecap="round"/>
+  <!-- Diagonal gear teeth -->
+  <line x1="51" y1="45" x2="55" y2="49" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="73" y1="67" x2="77" y2="71" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="77" y1="45" x2="73" y2="49" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="55" y1="67" x2="51" y2="71" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Arrow down (deploy) -->
+  <path d="M 56 86 L 64 96 L 72 86" fill="none" stroke="#6366f1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="64" y1="80" x2="64" y2="94" stroke="#6366f1" stroke-width="3" stroke-linecap="round"/>
+</svg>
