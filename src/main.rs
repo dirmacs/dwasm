@@ -1,4 +1,4 @@
-//! wasm-builder — Build tool for Leptos WASM frontends.
+//! dwasm — Build tool for Leptos WASM frontends.
 //!
 //! Replaces `trunk build --release` with a pipeline that handles
 //! the wasm-opt bulk-memory compatibility issue and automates
@@ -16,13 +16,13 @@
 //!
 //! ```bash
 //! # Workspace member crate
-//! wasm-builder --crate-name eruka-web --project /opt/eruka
+//! dwasm --crate-name eruka-web --project /opt/eruka
 //!
 //! # Standalone crate
-//! wasm-builder --crate-name dirmacs-admin --project /opt/dirmacs-admin --standalone
+//! dwasm --crate-name dirmacs-admin --project /opt/dirmacs-admin --standalone
 //!
 //! # Skip wasm-opt
-//! wasm-builder --crate-name my-app --project . --standalone --skip-opt
+//! dwasm --crate-name my-app --project . --standalone --skip-opt
 //! ```
 
 use clap::Parser;
@@ -31,7 +31,7 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 
 #[derive(Parser)]
-#[command(name = "wasm-builder", about = "Build Leptos WASM frontends with wasm-opt bulk-memory support")]
+#[command(name = "dwasm", about = "Build Leptos WASM frontends with wasm-opt bulk-memory support")]
 struct Cli {
     /// Crate name to build (e.g., eruka-web, dirmacs-admin)
     #[arg(long)]
@@ -69,7 +69,7 @@ fn main() {
     let dist_dir = cli.dist.map(PathBuf::from).unwrap_or_else(|| crate_dir.join("dist"));
     let wasm_name = cli.crate_name.replace('-', "_");
 
-    println!("=== wasm-builder ===");
+    println!("=== dwasm ===");
     println!("Crate:   {}", cli.crate_name);
     println!("Project: {}", project.display());
     println!("Dist:    {}", dist_dir.display());
