@@ -1,0 +1,14 @@
+[package]
+name = "wasm-builder"
+version = "0.1.0"
+edition = "2021"
+description = "Build tool for Leptos WASM frontends — handles wasm-bindgen, wasm-opt with bulk-memory, content hashing, and index.html patching"
+license = "MIT"
+repository = "https://github.com/dirmacs/wasm-builder"
+keywords = ["wasm", "leptos", "build-tool", "wasm-opt"]
+categories = ["development-tools::build-utils", "wasm"]
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+sha2 = "0.10"
+hex = "0.4"
