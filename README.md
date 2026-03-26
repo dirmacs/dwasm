@@ -8,7 +8,7 @@
 
 Modern Rust compilers emit `memory.copy`/`memory.fill` instructions (bulk memory operations) in WASM output. The version of `wasm-opt` bundled with Trunk doesn't enable the `--enable-bulk-memory` flag, causing release builds to fail with hundreds of validation errors. `dwasm` fixes this by running wasm-opt with the correct flags automatically.
 
-Built for the [DIRMACS](https://github.com/dirmacs) ecosystem where multiple Leptos 0.8 CSR frontends ([dui-leptos](https://github.com/dirmacs/dui-leptos) component library) ship to production — but works with any Leptos WASM project.
+Built for the [DIRMACS](https://github.com/dirmacs) ecosystem where multiple Leptos 0.8 CSR frontends ([dui-leptos](https://github.com/dirmacs/dui) component library) ship to production — but works with any Leptos WASM project.
 
 ## Install
 
@@ -114,7 +114,7 @@ JS:   eruka-web-a1b2c3d4e5f6g7h8.js
 
 ## Used by
 
-- [dui-leptos](https://github.com/dirmacs/dui-leptos) — Accessible dark-first UI component library for Leptos
+- [dui-leptos](https://github.com/dirmacs/dui) — Accessible dark-first UI component library for Leptos
 - [eruka-mcp](https://github.com/dirmacs/eruka-mcp) — MCP server for context memory
 - Multiple production Leptos 0.8 CSR frontends in the DIRMACS platform
 
