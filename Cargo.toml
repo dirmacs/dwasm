@@ -1,12 +1,13 @@
 [package]
 name = "dwasm"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Build tool for Leptos WASM frontends — handles wasm-bindgen, wasm-opt with bulk-memory, content hashing, and index.html patching"
 license = "MIT"
 repository = "https://github.com/dirmacs/dwasm"
 keywords = ["wasm", "leptos", "build-tool", "wasm-opt"]
 categories = ["development-tools::build-utils", "wasm"]
+readme = "README.md"
 
 [dependencies]
 clap = { version = "4", features = ["derive"] }
