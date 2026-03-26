@@ -1,5 +1,5 @@
 [package]
-name = "wasm-builder"
+name = "dirmacs-wasm-builder"
 version = "0.1.0"
 edition = "2021"
 description = "Build tool for Leptos WASM frontends — handles wasm-bindgen, wasm-opt with bulk-memory, content hashing, and index.html patching"
