@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ config.title }}</title>
+    <link rel="icon" type="image/svg+xml" href="{{ get_url(path='dwasm-logo.svg') }}">
+    <style>
+        :root { --bg: #0d1117; --fg: #c9d1d9; --accent: #6366f1; --card: #161b22; --border: #30363d; --dim: #8b949e; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: var(--fg); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; }
+        .hero { text-align: center; padding: 4rem 1rem 2rem; }
+        .hero img { width: 96px; margin-bottom: 1rem; }
+        .hero h1 { font-size: 2.5rem; color: #fff; margin-bottom: 0.5rem; }
+        .hero p { color: var(--dim); font-size: 1.1rem; max-width: 600px; margin: 0 auto 1.5rem; }
+        .badges { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+        .badges img { height: 20px; }
+        .install { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.5rem; max-width: 400px; margin: 0 auto 3rem; font-family: monospace; font-size: 0.95rem; color: var(--accent); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 900px; margin: 0 auto; padding: 0 1rem 3rem; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; }
+        .card h3 { color: #fff; margin-bottom: 0.5rem; }
+        .card p { color: var(--dim); font-size: 0.9rem; }
+        .section { max-width: 900px; margin: 0 auto; padding: 0 1rem 3rem; }
+        .section h2 { color: #fff; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+        code { background: var(--card); padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.85rem; }
+        pre { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; overflow-x: auto; margin: 1rem 0; }
+        pre code { background: none; padding: 0; }
+        .pipeline { display: flex; flex-direction: column; gap: 0; max-width: 500px; margin: 1.5rem auto; }
+        .step { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1rem; background: var(--card); border: 1px solid var(--border); }
+        .step:first-child { border-radius: 8px 8px 0 0; }
+        .step:last-child { border-radius: 0 0 8px 8px; }
+        .step-num { color: var(--accent); font-weight: 700; font-size: 0.85rem; min-width: 2rem; }
+        .step-text { font-size: 0.85rem; }
+        .arrow { text-align: center; color: var(--accent); font-size: 1.2rem; line-height: 1; }
+        footer { text-align: center; padding: 2rem; color: var(--dim); font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <img src="{{ get_url(path='dwasm-logo.svg') }}" alt="dwasm">
+        <h1>dwasm</h1>
+        <p>Production-grade build tool for Leptos WASM frontends. Fixes the wasm-opt bulk-memory issue that breaks <code>trunk build --release</code>.</p>
+        <div class="badges">
+            <img src="https://img.shields.io/crates/v/dwasm?style=flat-square&color=6366f1" alt="crates.io">
+            <img src="https://img.shields.io/crates/d/dwasm?style=flat-square&color=8b5cf6" alt="downloads">
+            <img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT">
+        </div>
+        <div class="install">cargo install dwasm</div>
+    </div>
+
+    <div class="section">
+        <h2>The Problem</h2>
+        <p>Modern Rust compilers emit <code>memory.copy</code> and <code>memory.fill</code> instructions in WASM output. Trunk's bundled <code>wasm-opt</code> runs without <code>--enable-bulk-memory</code>, causing hundreds of validation errors on release builds:</p>
+        <pre><code>[wasm-validator error] memory.copy operations require bulk memory [--enable-bulk-memory-opt]</code></pre>
+        <p><code>dwasm</code> solves this by running wasm-opt with the correct flags automatically, plus handles content hashing and index.html patching.</p>
+    </div>
+
+    <div class="section">
+        <h2>Pipeline</h2>
+        <div class="pipeline">
+            <div class="step"><span class="step-num">1</span><span class="step-text"><code>cargo build --release --target wasm32-unknown-unknown</code></span></div>
+            <div class="step"><span class="step-num">2</span><span class="step-text"><code>wasm-bindgen --target web --no-typescript</code></span></div>
+            <div class="step"><span class="step-num">3</span><span class="step-text"><code>wasm-opt -Oz --enable-bulk-memory</code></span></div>
+            <div class="step"><span class="step-num">4</span><span class="step-text">Content-hash filenames (SHA-256)</span></div>
+            <div class="step"><span class="step-num">5</span><span class="step-text">Patch <code>index.html</code> references + strip integrity hashes</span></div>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Workspace Support</h3>
+            <p>Build a crate inside a Cargo workspace. Auto-finds crates in <code>crates/</code> subdirectory.</p>
+            <pre><code>dwasm --crate-name my-web \
+  --project /path/to/workspace</code></pre>
+        </div>
+        <div class="card">
+            <h3>Standalone Crates</h3>
+            <p>Build a standalone Leptos crate that isn't part of a workspace.</p>
+            <pre><code>dwasm --crate-name my-app \
+  --project . --standalone</code></pre>
+        </div>
+        <div class="card">
+            <h3>Skip wasm-opt</h3>
+            <p>Fast dev builds without optimization. Still does hashing and HTML patching.</p>
+            <pre><code>dwasm --crate-name my-app \
+  --project . --standalone --skip-opt</code></pre>
+        </div>
+        <div class="card">
+            <h3>Size Reduction</h3>
+            <p>Typical results with recommended Cargo profile: 40-55% WASM size reduction via wasm-opt <code>-Oz</code>.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Recommended Cargo Profile</h2>
+        <pre><code>[profile.release]
+opt-level = "s"     # Optimize for size
+lto = true          # Link-time optimization
+codegen-units = 1   # Better optimization
+# NOTE: do NOT add strip=true — it breaks WASM</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>Requirements</h2>
+        <pre><code># wasm32 target
+rustup target add wasm32-unknown-unknown
+
+# wasm-bindgen CLI (must match your Cargo.lock version)
+cargo install wasm-bindgen-cli
+
+# wasm-opt (auto-detected from trunk cache or PATH)
+# dwasm finds it at ~/.cache/trunk/wasm-opt-*/bin/wasm-opt</code></pre>
+    </div>
+
+    <footer>
+        Built by <a href="https://dirmacs.com">DIRMACS</a> &middot;
+        <a href="https://github.com/dirmacs/dwasm">GitHub</a> &middot;
+        <a href="https://crates.io/crates/dwasm">crates.io</a> &middot;
+        <a href="https://github.com/dirmacs/dui">DUI Components</a>
+    </footer>
+</body>
+</html>
