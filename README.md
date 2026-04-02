@@ -119,7 +119,7 @@ JS:   eruka-web-a1b2c3d4e5f6g7h8.js
 ## Used by
 
 - [dui-leptos](https://github.com/dirmacs/dui) — Accessible dark-first UI component library for Leptos
-- [eruka-mcp](https://github.com/dirmacs/eruka-mcp) — MCP server for context memory
+- [eruka](https://eruka.dirmacs.com) — Context intelligence and memory platform
 - Multiple production Leptos 0.8 CSR frontends in the DIRMACS platform
 
 ## Configuration
