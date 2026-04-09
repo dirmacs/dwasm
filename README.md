@@ -100,9 +100,9 @@ For workspace projects, the crate is found automatically in `crates/<name>/` or 
 
 ```
 === dwasm ===
-Crate:   eruka-web
-Project: /opt/eruka
-Dist:    /opt/eruka/crates/eruka-web/dist
+Crate:   my-web
+Project: ~/projects/my-app
+Dist:    ~/projects/my-app/crates/my-web/dist
 
 [1/5] cargo build --release --target wasm32-unknown-unknown
 [2/5] wasm-bindgen

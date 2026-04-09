@@ -16,10 +16,10 @@
 //!
 //! ```bash
 //! # Workspace member crate
-//! dwasm --crate-name eruka-web --project /opt/eruka
+//! dwasm --crate-name my-web --project ~/projects/my-app
 //!
 //! # Standalone crate
-//! dwasm --crate-name dirmacs-admin --project /opt/dirmacs-admin --standalone
+//! dwasm --crate-name my-admin --project ~/projects/my-admin --standalone
 //!
 //! # Skip wasm-opt
 //! dwasm --crate-name my-app --project . --standalone --skip-opt
