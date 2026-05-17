@@ -67,7 +67,8 @@ fn main() {
 
     let crate_dir = find_crate_dir(&project, &cli.crate_name, cli.standalone);
     let dist_dir = cli.dist.map(PathBuf::from).unwrap_or_else(|| crate_dir.join("dist"));
-    let wasm_name = cli.crate_name.replace('-', "_");
+    let wasm_name = bindgen_wasm_name(&cli.crate_name);
+    let cargo_wasm_name = cargo_wasm_name(&cli.crate_name);
 
     println!("=== dwasm ===");
     println!("Crate:   {}", cli.crate_name);
@@ -89,7 +90,7 @@ fn main() {
     step("2/5", "wasm-bindgen");
     let wasm_file = project
         .join("target/wasm32-unknown-unknown/release")
-        .join(format!("{}.wasm", wasm_name));
+        .join(format!("{}.wasm", cargo_wasm_name));
     if !wasm_file.exists() {
         eprintln!("WASM file not found: {}", wasm_file.display());
         std::process::exit(1);
@@ -183,6 +184,14 @@ fn find_crate_dir(project: &Path, crate_name: &str, standalone: bool) -> PathBuf
     }
     eprintln!("Crate '{}' not found in '{}'", crate_name, project.display());
     std::process::exit(1);
+}
+
+fn cargo_wasm_name(crate_name: &str) -> String {
+    crate_name.to_string()
+}
+
+fn bindgen_wasm_name(crate_name: &str) -> String {
+    crate_name.replace('-', "_")
 }
 
 fn clean_old_artifacts(dist: &Path, crate_name: &str, wasm_name: &str) {
@@ -318,6 +327,18 @@ mod tests {
     fn test_extract_reference_no_match() {
         let line = "no references here";
         assert_eq!(extract_reference(line, "eruka-web-", ".js"), None);
+    }
+
+    #[test]
+    fn test_wasm_names_for_hyphenated_crate() {
+        assert_eq!(cargo_wasm_name("dsprint-survey"), "dsprint-survey");
+        assert_eq!(bindgen_wasm_name("dsprint-survey"), "dsprint_survey");
+    }
+
+    #[test]
+    fn test_wasm_names_for_plain_crate() {
+        assert_eq!(cargo_wasm_name("dinkedin"), "dinkedin");
+        assert_eq!(bindgen_wasm_name("dinkedin"), "dinkedin");
     }
 
     #[test]
